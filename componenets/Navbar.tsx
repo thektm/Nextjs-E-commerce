@@ -3,7 +3,7 @@ import React, { useState, useEffect, use } from "react";
 import PopupWindow from "./PopupWindow";
 import Burger from "./Burger";
 import Input2 from "./Input2";
-import Cart from "./Cart";
+import Cart from "@/componenets/NewCart"
 import { motion } from "framer-motion";
 import { useScroll } from "framer-motion";
 import { useTransform } from "framer-motion";
