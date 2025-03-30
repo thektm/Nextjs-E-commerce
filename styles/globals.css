@@ -1,26 +1,66 @@
 @import "tailwindcss";
-
+@font-face {
+  font-family: 'title';
+  src: url('../public/Title.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+@font-face {
+  font-family: 'brillant';
+  src: url('../public/brillant.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+@font-face {
+  font-family: 'rezvan';
+  src: url('../public/Rezvan.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+@font-face {
+  font-family: 'waste';
+  src: url('../public/waste.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+@theme{
+  --font-brillant : 'brillant' , 'mono';
+  --font-waste : 'waste' , 'mono';
+  --font-rezvan : 'rezvan' , 'sans';
+  --font-title : 'title' , 'mono';
+}
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #000000;
   }
 }
 
 body {
+  
+  scrollbar-width: none;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
+
