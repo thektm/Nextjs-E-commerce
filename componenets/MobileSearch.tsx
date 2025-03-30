@@ -146,7 +146,7 @@ export const MobileSearch: React.FC = () => {
                 </div>
               )}
             </div>
-
+ 
             <X
               color="black"
               size={25}
