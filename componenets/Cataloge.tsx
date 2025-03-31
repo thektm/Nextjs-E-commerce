@@ -266,17 +266,11 @@ const Cataloge: React.FC = () => {
       >
         <motion.div
           drag="x"
-          dragListener={false}
           dragConstraints={{ left: -1000, right: 0 }}
           whileTap={{ cursor: "grabbing" }}
           className="flex space-x-4"
           initial={{ x: 0 }}
           style={{ touchAction: "none" }}
-          animate={{ x: `${xValue}%` }}
-          transition={{
-            duration: 15,
-            ease: "linear",
-          }}
         >
           {best.length > 0 &&
             best.map((product: any) => (
