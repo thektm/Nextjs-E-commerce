@@ -134,9 +134,9 @@ const MainCard: React.FC<CardProps> = ({
         </div>
         <span
           className={
-            "rounded-4xl shadow-xs absolute right-5 top-52 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
+            "rounded-4xl shadow-xs absolute right-5 bottom-32 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
           }
-        >{`$ ${price}.00 `}</span>
+        >{!open ?`$ ${price}.00 ` : ""}</span>
       </div>
       {open && (
         <motion.div

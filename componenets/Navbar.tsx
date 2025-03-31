@@ -3,22 +3,17 @@ import React, { useState, useEffect, use } from "react";
 import PopupWindow from "./PopupWindow";
 import Burger from "./Burger";
 import Input2 from "./Input2";
-import Cart from "@/componenets/NewCart"
-import { motion } from "framer-motion";
-import { useScroll } from "framer-motion";
-import { useTransform } from "framer-motion";
+import Cart from "@/componenets/NewCart";
 import { MobileSearch } from "./MobileSearch";
-import { toast } from "react-toastify";
 import { useAuth } from "@/context/AuthContext";
-import { TableRowsSplit } from "lucide-react";
 interface NavbarProps {
   userLogin?: boolean;
 }
 export const Navbar: React.FC<NavbarProps> = ({ userLogin }) => {
+  
   const [showSearch, setShowSearch] = useState<boolean>(false);
-  const { scrollYProgress } = useScroll();
+
   const { user } = useAuth();
-  const x = useTransform(scrollYProgress, [0, 1], ["-100%", "0%"]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,12 +28,6 @@ export const Navbar: React.FC<NavbarProps> = ({ userLogin }) => {
   }, []);
   return (
     <div className="min-h-17 fixed z-10 grid w-screen grid-cols-6 grid-rows-1 items-center overflow-visible border-b border-amber-100 bg-gray-50 drop-shadow-xl transition-all">
-      <motion.img
-        src="/navbar.png"
-        alt="logo"
-        className="absolute h-full w-full object-cover opacity-30"
-        style={{ x }}
-      />
       {/* Logo */}
       <img
         src="/maral.png"
@@ -79,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ userLogin }) => {
             }, 1450);
           }}
         >
-          Contact Us{" "}
+          Contact Us
         </h1>
       </div>
       <div className="col-start-6 col-end-7 mx-2 flex justify-self-end md:mx-4">

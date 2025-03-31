@@ -1,69 +1,70 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { useEffect } from "react";
-import React from "react";
+import { useState, useEffect } from "react";
 
 const Burger: React.FC = () => {
   const [width, setWidth] = useState(0);
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    window.addEventListener("resize", () => {
-      setWidth(window.innerWidth);
-    });
-    return () => {
-      window.removeEventListener("resize", () => {
-        setWidth(window.innerWidth);
-      });
-    };
-  });
   const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
-    if (isOpen) {
-      const scrollY = window.scrollY;
+    // Handle window resize
+    const handleResize = () => setWidth(window.innerWidth);
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-      document.body.style.overflow = "hidden";
-
-      return () => {
-        document.body.style.overflow = "";
-        window.scrollTo(0, scrollY);
-      };
-    }
+  useEffect(() => {
+    // Toggle body scroll
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
+
+  const handleNavigation = (scrollPosition: number) => {
+    setIsOpen(false);
+    window.scrollTo({ top: scrollPosition, behavior: "smooth" });
+  };
 
   return (
     <div className="lg:hidden">
-      {/* 🍔 Burger Button */}
+      {/* Burger Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="right-4 top-4 z-50 m-2 rounded-md text-white"
+        className="right-4 top-4 z-50 m-2 text-black"
       >
-        <svg viewBox="0 0 32 32" className="h-8 w-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+         className="w-7 h-8"
+        >
           <path
-            className="line line-top-bottom"
-            d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-          ></path>
-          <path className="line" d="M7 16 27 16"></path>
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h22M5 16h22M5 24h22"
+          />
         </svg>
       </button>
 
-      {/* 🟡 Overlay (Click outside to close) */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-50 h-screen w-screen overflow-hidden bg-white opacity-50"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 z-40 h-screen w-screen bg-white transition-opacity duration-300 ${
+          isOpen ? "opacity-50" : "pointer-events-none opacity-0"
+        }`}
+        onClick={() => setIsOpen(false)}
+      />
 
-      <motion.div
-        initial={{ x: "110%" }}
-        animate={{ x: isOpen ? "-5%" : "200%" }}
-        exit={{ x: "200%" }}
-        transition={{ type: "spring", stiffness: 250, damping: 25 }}
-        className="absolute -right-5 z-50 h-screen w-64 bg-white p-4 shadow-lg"
+      {/* Navigation Menu */}
+      <div
+        className={`fixed -right-5 top-0 z-50 h-screen w-78 transform bg-white p-4 shadow-lg transition-transform duration-300 ${
+          isOpen ? "-translate-x-[5%]" : "translate-x-full"
+        }`}
       >
-        {/* ❌ Close Button */}
+        {/* Close Button */}
         <button
           className="absolute right-4 top-4 text-2xl"
           onClick={() => setIsOpen(false)}
@@ -71,75 +72,44 @@ const Burger: React.FC = () => {
           ✖
         </button>
 
-        {/* 📜 Navigation Links */}
+        {/* Navigation Links */}
         <nav className="mt-12">
           <ul className="font-rezvan space-y-4 text-right text-lg">
             <li>
-              <div
-                className="block rounded p-2 hover:bg-gray-200"
-                onClick={async () => {
-                  await setIsOpen(false);
-                  scrollTo({ top: 0, behavior: "smooth" });
-                }}
+              <button
+                onClick={() => handleNavigation(0)}
+                className="w-full rounded p-2 text-right hover:bg-gray-200"
               >
                 خانه
-              </div>
+              </button>
             </li>
             <li>
-              <div
-                className="block rounded p-2 hover:bg-gray-200"
-                onClick={async () => {
-                  await setIsOpen(false);
-                  scrollTo({ top: 1125, behavior: "smooth" });
-                }}
+              <button
+                onClick={() => handleNavigation(1425)}
+                className="w-full rounded p-2 text-right hover:bg-gray-200"
               >
                 محصولات
-              </div>
+              </button>
             </li>
             <li>
-              <div
-                className="block rounded p-2 hover:bg-gray-200"
-                onClick={async () => {
-                  await setIsOpen(false);
-                  scrollTo({
-                    top: width > 768 ? 4000 : 6920,
-                    behavior: "smooth",
-                  });
-                  setTimeout(() => {
-                    scrollTo({
-                      top: width > 768 ? 4000 : 6920,
-                      behavior: "smooth",
-                    });
-                  }, 1000);
-                }}
+              <button
+                onClick={() => handleNavigation(width > 768 ? 4000 : 6700)}
+                className="w-full rounded p-2 text-right hover:bg-gray-200"
               >
                 درباره ما
-              </div>
+              </button>
             </li>
             <li>
-              <div
-                className="block rounded p-2 hover:bg-gray-200"
-                onClick={async () => {
-                  await setIsOpen(false);
-                  scrollTo({
-                    top: width > 768 ? 9800 : 8850,
-                    behavior: "smooth",
-                  });
-                  setTimeout(() => {
-                    scrollTo({
-                      top: width > 768 ? 9800 : 8850,
-                      behavior: "smooth",
-                    });
-                  }, 1500);
-                }}
+              <button
+                onClick={() => handleNavigation(width > 768 ? 9800 : 8850)}
+                className="w-full rounded p-2 text-right hover:bg-gray-200"
               >
                 تماس با ما
-              </div>
+              </button>
             </li>
-            
           </ul>
         </nav>
-      </motion.div>
+      </div>
     </div>
   );
 };

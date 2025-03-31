@@ -14,6 +14,7 @@ import MainCard from "./MainCard";
 import DetailModal from "./DetailModal";
 import { X } from "lucide-react";
 import { useSelection } from "@/context/SelectionCOntext";
+import BestSellers from "./BestSellers";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -90,12 +91,12 @@ const Cataloge: React.FC = () => {
       category?: string;
     }[]
   >([]);
-  const [direction, setDirection] = useState<"left" | "right">("right");
+
   const [xValue, setXValue] = useState(0);
   // Mobile dropdown open state
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const categories = ["MEN", "WOMEN", "SHOES", "BAG", "ACCESSORY"];
-
+  const [direction, setDirection] = useState(-1);
   // Fetch all products initially
   useEffect(() => {
     fetchProducts()
@@ -150,7 +151,7 @@ const Cataloge: React.FC = () => {
 
   // Smooth scroll when changing pages
   useEffect(() => {
-    if (newRef.current) {
+    if (newRef.current && window.scrollY !== 0) {
       const container = newRef.current;
       const scrollPosition = container.offsetTop - 100;
       window.scrollTo({
@@ -258,42 +259,9 @@ const Cataloge: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <h1 className="font-title mt-2 text-center text-3xl">BESTSELLERS</h1>
-      {/* Horizontal Slider for Best Sellers */}
-      <div
-        className="mt-6 w-full overflow-hidden p-4"
-        style={{ overflowX: "hidden" }}
-      >
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: -1000, right: 0 }}
-          whileTap={{ cursor: "grabbing" }}
-          className="flex space-x-4"
-          initial={{ x: 0 }}
-          style={{ touchAction: "none" }}
-        >
-          {best.length > 0 &&
-            best.map((product: any) => (
-              <div key={product.id} className="w-auto">
-                <HangingCard
-                  setSelected={() => setSelected(product)}
-                  openMobile={() => {
-                    setOpenMobile(true);
-                    setMobileContent(product);
-                  }}
-                  onClick={() => {}}
-                  title={product.title}
-                  product={product}
-                  description={product.description}
-                  imageUrl={product.imageurl}
-                  price={product.price}
-                />
-              </div>
-            ))}
-        </motion.div>
-      </div>
+      <BestSellers />
       {/* Banner Section */}
-      <div className="w-full">
+      <div className="w-fit  mx-auto">
         <div className="cardn">
           <div className="loadern font-title justify-self-center text-sm md:text-xl lg:text-3xl">
             <p className="text-center">Always Choose and Wear </p>
@@ -421,13 +389,7 @@ const Cataloge: React.FC = () => {
         </motion.div>
 
         {/* Product Grid */}
-        <motion.div
-          className="col-start-1 col-end-8 row-start-1 m-6 md:col-end-6"
-          initial={{ y: -50, opacity: 0 }}
-          ref={ref}
-          animate={controlsGal}
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <div className="col-start-1 col-end-8 row-start-1 m-6 md:col-end-6">
           <div
             className="relative columns-1 md:columns-2 lg:columns-3"
             ref={newRef}
@@ -497,7 +459,7 @@ const Cataloge: React.FC = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
       <DetailModal selected={selected} disable={() => setSelected(null)} />
     </div>
