@@ -27,7 +27,7 @@ const NewHero: React.FC = () => {
           />
         </div>
         <h1
-          className={`font-rezvan absolute mt-[45%] md:mt-30 lg:mt-50  text-center text-4xl font-bold text-white md:text-5xl lg:text-7xl`}
+          className={`font-rezvan md:mt-30 lg:mt-50 absolute mt-[65%] text-center text-4xl font-bold text-white md:text-5xl lg:text-7xl`}
         >
           بهترین چرم ها را با ما تجربه کنید
           <br />
