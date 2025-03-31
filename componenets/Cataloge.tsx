@@ -260,12 +260,16 @@ const Cataloge: React.FC = () => {
       </AnimatePresence>
       <h1 className="font-title mt-2 text-center text-3xl">BESTSELLERS</h1>
       {/* Horizontal Slider for Best Sellers */}
-      <div className="mt-6 w-full overflow-hidden p-4">
+      <div
+        className="mt-6 w-full overflow-hidden p-4"
+        style={{ overflowX: "hidden" }}
+      >
         <motion.div
           drag="x"
           dragConstraints={{ left: -1000, right: 0 }}
           whileTap={{ cursor: "grabbing" }}
           className="flex space-x-4"
+          style={{ touchAction: "none" }}
           animate={{ x: `${xValue}%` }}
           transition={{
             duration: 15,
@@ -274,7 +278,7 @@ const Cataloge: React.FC = () => {
         >
           {best.length > 0 &&
             best.map((product: any) => (
-              <motion.div key={product.id} className="w-auto">
+              <div key={product.id} className="w-auto">
                 <HangingCard
                   setSelected={() => setSelected(product)}
                   openMobile={() => {
@@ -288,7 +292,7 @@ const Cataloge: React.FC = () => {
                   imageUrl={product.imageurl}
                   price={product.price}
                 />
-              </motion.div>
+              </div>
             ))}
         </motion.div>
       </div>
@@ -315,7 +319,7 @@ const Cataloge: React.FC = () => {
         />
       )}
 
-      <div className="relative z-9 mx-auto mb-4 w-[85%] text-center md:hidden">
+      <div className="z-9 relative mx-auto mb-4 w-[85%] text-center md:hidden">
         <button
           onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
           className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-black/80 p-4 shadow-lg shadow-black/20 transition-all duration-300 hover:bg-black/90 hover:shadow-black/30 active:scale-95"
@@ -324,7 +328,7 @@ const Cataloge: React.FC = () => {
             {filterCategory || "Browse Categories"}
           </span>
           <svg
-            className={`h-6 w-6 text-white transform transition-all duration-300 ${
+            className={`h-6 w-6 transform text-white transition-all duration-300 ${
               isMobileDropdownOpen ? "rotate-180" : ""
             }`}
             fill="none"
