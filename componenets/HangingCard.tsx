@@ -76,15 +76,17 @@ const HangingCard: React.FC<CardProps> = ({
         draggable={false}
         className="font-waste mx-auto max-h-[250px] min-h-[250px] w-fit cursor-pointer rounded-2xl object-contain"
       />
+
       <span
         ref={ref}
-        className="font-waste absolute mt-2 w-[80%] border-t-2 p-2 text-center text-2xl"
+        className="font-waste absolute mt-2 w-[80%] border-t-2 p-8 text-center text-3xl"
       >
         {title}
       </span>
+
       <span
         className={
-          "rounded-4xl shadow-xs absolute right-5 bottom-52 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
+          "rounded-4xl shadow-xs absolute bottom-52 right-5 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
         }
       >{`$ ${price}.00 `}</span>
     </motion.div>
