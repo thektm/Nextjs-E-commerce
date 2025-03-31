@@ -5,7 +5,7 @@ import LearnMore from "./LearnMore";
 const NewHero: React.FC = () => {
   return (
     <div className="z-0 mx-auto h-full w-full overflow-hidden">
-      <div className="flex h-screen w-full items-center justify-center overflow-hidden">
+      <div className="rela flex h-screen w-full items-center justify-center overflow-hidden">
         <div className="h-full w-full overflow-hidden">
           <motion.img
             src="/HeroLeft.webp"
@@ -13,7 +13,7 @@ const NewHero: React.FC = () => {
             initial={{ scale: 1.2, width: "100%" }}
             animate={{ scale: 1.5, width: "100%" }}
             transition={{ duration: 10, ease: "easeOut" }}
-            className="z-20 h-full w-full -translate-x-5 object-cover object-right"
+            className="z-20 h-full w-full -translate-x-5 object-cover"
           />
         </div>
         <div className="h-full w-full overflow-hidden">
@@ -27,7 +27,7 @@ const NewHero: React.FC = () => {
           />
         </div>
         <h1
-          className={`font-rezvan -bottom-110 absolute h-screen w-full text-center text-4xl font-bold text-white md:text-5xl lg:text-7xl`}
+          className={`font-rezvan absolute mt-[45%] md:mt-30 lg:mt-50  text-center text-4xl font-bold text-white md:text-5xl lg:text-7xl`}
         >
           بهترین چرم ها را با ما تجربه کنید
           <br />
