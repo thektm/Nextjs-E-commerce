@@ -151,7 +151,7 @@ const Cataloge: React.FC = () => {
 
   // Smooth scroll when changing pages
   useEffect(() => {
-    if (newRef.current && window.scrollY !== 0) {
+    if (newRef.current && window.scrollY >100) {
       const container = newRef.current;
       const scrollPosition = container.offsetTop - 100;
       window.scrollTo({
