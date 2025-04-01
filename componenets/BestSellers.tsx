@@ -98,7 +98,7 @@ const BestSellers: React.FC = () => {
   };
   return (
     <section className="w-full bg-gradient-to-b from-slate-50 to-white py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="font-title -mt-14 mb-12 text-center text-4xl font-bold text-slate-800 md:text-5xl">
           BESTSELLERS Collection
         </h2>
@@ -137,7 +137,7 @@ const BestSellers: React.FC = () => {
           </div>
         )}
 
-        <div className="relative">
+        <div className="relative w-full">
           {loading ? (
             <div className="flex h-96 items-center justify-center">
               <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-300 border-t-emerald-500" />
@@ -167,10 +167,12 @@ const BestSellers: React.FC = () => {
                 1024: {
                   slidesPerView: 3,
                   spaceBetween: 40,
+                  
                 },
                 1280: {
                   slidesPerView: 3,
                   spaceBetween: 50,
+                  
                 },
               }}
               mousewheel={{
@@ -179,13 +181,11 @@ const BestSellers: React.FC = () => {
                 sensitivity: 0.5,
               }}
               loopPreventsSliding={true} // Prevent edge sliding
-              watchSlidesProgress={true}
-              slideToClickedSlide={true}
+            
+              
               preventInteractionOnTransition={true} // P
-              loopAdditionalSlides={4}
-              onSlideChange={(swiper) =>
-                console.log("Real index:", swiper.realIndex)
-              }
+              loopAdditionalSlides={14}
+            
             >
               {best.map((product) => (
                 <SwiperSlide key={product.id} className="!h-auto !w-[320px]">

@@ -197,17 +197,6 @@ const Cataloge: React.FC = () => {
     }
   }, [inView, controlsGal]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDirection((prev) => (prev === "left" ? "right" : "left"));
-    }, 15000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setXValue(direction === "left" ? 0 : -100);
-  }, [direction]);
-
   // Reset all products (clears filter and re-fetches data)
   const handleReset = useCallback(async () => {
     try {
@@ -261,7 +250,7 @@ const Cataloge: React.FC = () => {
       </AnimatePresence>
       <BestSellers />
       {/* Banner Section */}
-      <div className="w-fit  mx-auto">
+      <div className="mx-auto w-fit">
         <div className="cardn">
           <div className="loadern font-title justify-self-center text-sm md:text-xl lg:text-3xl">
             <p className="text-center">Always Choose and Wear </p>
