@@ -413,10 +413,11 @@ const Cataloge: React.FC = () => {
               <div className="flex gap-4">
                 <button
                   onClick={() => {
-                    handlePrevPage();
-                    newRef.current?.scrollIntoView({
+                    handleNextPage();
+                    const scrollPosition = newRef.current?.offsetTop ?? 0 - 100;
+                    window.scrollTo({
+                      top: scrollPosition,
                       behavior: "smooth",
-                      block: "start",
                     });
                   }}
                   disabled={currentPage === 0}
@@ -431,12 +432,12 @@ const Cataloge: React.FC = () => {
                 <button
                   onClick={() => {
                     handleNextPage();
-                    newRef.current?.scrollIntoView({
+                    const scrollPosition = newRef.current?.offsetTop ?? 0 - 100;
+                    window.scrollTo({
+                      top: scrollPosition,
                       behavior: "smooth",
-                      block: "nearest",
                     });
                   }}
-                  disabled={currentPage >= totalPages - 1}
                   className={`bg-gray-900 p-3 font-sans uppercase text-white shadow-sm shadow-gray-400 ${
                     currentPage >= totalPages - 1
                       ? "cursor-not-allowed opacity-50"
