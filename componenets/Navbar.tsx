@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({ userLogin }) => {
         onClick={() => {
           scrollTo({ top: 0, behavior: "smooth" });
         }}
-        className="lg:w-55 md:w-55 w-35 absolute m-1 h-fit transition-all md:static md:ml-4 lg:static lg:ml-10"
+        className="lg:w-55 md:w-55 w-35 absolute m-1 h-fit cursor-pointer transition-all md:static md:ml-4 lg:static lg:ml-10"
       />
       <div
         className={`font-brillant text-md col-start-2 font-bold ${showSearch ? `col-end-4 pr-4` : `col-end-6`} row-end-1 ml-2 hidden h-full w-full translate-x-8 transition-all duration-500 lg:flex`}

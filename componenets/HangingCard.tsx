@@ -28,6 +28,7 @@ const useWindowSize = () => {
 };
 
 interface CardProps {
+  
   title: string;
   description: string;
   imageUrl: string;
@@ -43,6 +44,7 @@ const HangingCard: React.FC<CardProps> = ({
   description,
   imageUrl,
   price,
+ 
   onClick,
   setSelected,
   openMobile,
@@ -62,8 +64,9 @@ const HangingCard: React.FC<CardProps> = ({
     }
   };
   return (
-    <motion.div
-      layout
+    <div className="w-[320px] transform-gpu transition-all duration-300">
+    <div
+      
       onClick={onClick}
       className="group relative min-h-[450px] min-w-[210px] overflow-visible rounded-[2px] border-2 border-[#c3c6ce] bg-[#ffffff] p-[1.8rem] transition-all duration-500 ease-out hover:border-[#000000] hover:shadow-[0_4px_18px_0_rgba(0,0,0,0.25)] md:min-w-[240px] lg:min-w-[255px]"
     >
@@ -89,7 +92,8 @@ const HangingCard: React.FC<CardProps> = ({
           "rounded-4xl shadow-xs absolute bottom-52 right-5 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
         }
       >{`$ ${price}.00 `}</span>
-    </motion.div>
+    </div>
+    </div>
   );
 };
 

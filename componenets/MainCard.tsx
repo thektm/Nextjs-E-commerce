@@ -114,7 +114,7 @@ const MainCard: React.FC<CardProps> = ({
   };
 
   return (
-    <div className="group relative h-fit max-w-[350px] flex-row items-center justify-center overflow-visible rounded-[2px] border-2 border-[#c3c6ce] bg-[#ffffff] p-[1.8rem] transition-all duration-500 ease-out hover:border-[#070707] hover:shadow-[0_4px_18px_0_rgba(0,0,0,0.25)]">
+    <div className="group relative h-fit max-w-[370px] md:max-w-[350px] flex-row items-center justify-center overflow-visible rounded-[2px] border-2 border-[#c3c6ce] bg-[#ffffff] p-[1.8rem] transition-all duration-500 ease-out hover:border-[#070707] hover:shadow-[0_4px_18px_0_rgba(0,0,0,0.25)]">
       <div
         onClick={() => {
           handleOpen();
@@ -134,22 +134,24 @@ const MainCard: React.FC<CardProps> = ({
         </div>
         <span
           className={
-            "rounded-4xl shadow-xs absolute right-5 bottom-32 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
+            "rounded-4xl shadow-xs absolute bottom-32 right-5 bg-white px-2 text-sm shadow-gray-600 md:text-lg"
           }
-        >{!open ?`$ ${price}.00 ` : ""}</span>
+        >
+          {!open ? `$ ${price}.00 ` : ""}
+        </span>
       </div>
       {open && (
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="h-fit w-fit flex-row items-center justify-center"
+          className="relative mt-2 h-fit max-w-fit flex-row items-center justify-center"
         >
-          <div className="grid grid-cols-4">
-            <div className="col-start-1 self-center justify-self-center p-4 text-center font-sans">
-              Description
+          <div className="flex justify-center text-center">
+            <div className="border-t-1 absolute top-0 -translate-y-1 rounded-2xl border-gray-300 bg-gray-100 p-2">
+              DESCRIPTONS
             </div>
-            <div className="border-1 col-start-2 col-end-5 m-2 self-center justify-self-center rounded-2xl border-gray-300 bg-gray-100 p-4 text-center">
+            <div className="border-1 col-start-2 col-end-5 m-2 self-center justify-self-center rounded-2xl border-gray-300 bg-gray-100 p-4 pt-6 text-center">
               {description}
             </div>
           </div>
@@ -176,31 +178,7 @@ const MainCard: React.FC<CardProps> = ({
                   {size.label}
 
                   {/* Selection indicator */}
-                  {selectedSize === size.value && (
-                    <motion.div
-                      className="absolute -right-2 -top-2 rounded-full border-2 border-black bg-white p-1"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <motion.svg
-                        className="h-4 w-4 text-black"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </motion.svg>
-                    </motion.div>
-                  )}
+                 
                 </motion.button>
               ))}
             </div>
@@ -249,31 +227,56 @@ const MainCard: React.FC<CardProps> = ({
             <ShoppingBag size={20} className="mx-2 justify-self-start" />
             add
           </motion.div>
-          <div className="grid grid-cols-2">
+          <div className="mt-4 space-y-3">
             {currentItem.length >= 1 &&
               currentItem.map((item) => (
                 <div
-                  key={item.quantity}
-                  className="m-2 inline h-fit w-fit rounded-full bg-black/80 p-2 font-mono uppercase text-white"
+                  key={`${item.id}-${item.quantity}`}
+                  className="flex items-center justify-between rounded-xl bg-white p-4 shadow transition duration-300 hover:shadow-lg dark:bg-gray-50"
                 >
-                  <span className="px-1">{item.quantity}</span>
-                  <span className="px-1">{item.sizes}</span>
-                  <Minus
-                    onClick={() => {
-                      decreaseItem(item);
-                      decreaseCurrentItem(item);
-                    }}
-                    className="mx-1 inline cursor-pointer"
-                    size={20}
-                  />
-                  <X
-                    className="mx-1 inline cursor-pointer"
-                    size={20}
-                    onClick={() => {
-                      resetItem(item);
-                      resetCurrentItem(item);
-                    }}
-                  />
+                  <div className="flex items-center space-x-4">
+                    {/* Thumbnail */}
+                    <div className="h-10 w-10 overflow-hidden rounded-full border border-gray-200">
+                      <img
+                        src={item.imageurl}
+                        alt={item.title}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    {/* Item details */}
+                    <div className="flex flex-col">
+                      <p className="font-bold text-gray-800 dark:text-gray-900">
+                        {item.title}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-600">
+                        Size: {item.sizes}
+                      </p>
+                    </div>
+                  </div>
+                  {/* Quantity and action buttons */}
+                  <div className="flex items-center space-x-2">
+                    <span className="font-semibold text-gray-800 dark:text-gray-900">
+                      {item.quantity}
+                    </span>
+                    <button
+                      onClick={() => {
+                        decreaseItem(item);
+                        decreaseCurrentItem(item);
+                      }}
+                      className="rounded-full bg-gray-200 p-2 transition hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                    >
+                      <Minus size={20} color="white" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        resetItem(item);
+                        resetCurrentItem(item);
+                      }}
+                      className="rounded-full bg-gray-200 p-2 transition hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                    >
+                      <X size={20} color="white" />
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>

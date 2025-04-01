@@ -43,7 +43,7 @@ const NewHero: React.FC = () => {
           />
         </div>
         <h1
-          className={`font-rezvan md:mt-45 absolute mt-[85%] text-center text-4xl font-bold text-white md:text-5xl lg:mt-60 lg:text-7xl`}
+          className={`font-rezvan md:mt-45 absolute mt-[75%] text-center text-4xl font-bold text-white md:text-5xl lg:mt-60 lg:text-7xl`}
         >
           بهترین چرم ها را با ما تجربه کنید
           <br />
@@ -51,9 +51,9 @@ const NewHero: React.FC = () => {
         </h1>
       </div>
 
-      <div className="-translate-y-93 absolute flex w-full scale-95 justify-between text-4xl">
+      <div className="md:-translate-y-93 -translate-y-110 absolute flex w-full scale-95 justify-between text-4xl">
         <button
-          className="buttonx ml-10 text-2xl md:text-4xl lg:text-6xl"
+          className="buttonx ml-10 text-4xl md:text-4xl lg:text-6xl"
           data-text="Awesome"
           onClick={() => {
             setTimeout(() => {
@@ -61,18 +61,18 @@ const NewHero: React.FC = () => {
             }, 400);
           }}
         >
-          <span className="actual-textx text-2xl md:text-4xl lg:text-6xl">
+          <span className="actual-textx text-4xl md:text-4xl lg:text-6xl">
             &nbsp;Men&nbsp;
           </span>
           <span
             aria-hidden="true"
-            className="hover-textx text-2xl md:text-4xl lg:text-6xl"
+            className="hover-textx text-4xl md:text-4xl lg:text-6xl"
           >
             &nbsp;MEN&nbsp;
           </span>
         </button>
         <button
-          className="buttonxw mr-6 text-2xl md:text-4xl lg:text-6xl"
+          className="buttonxw -mr-2 text-4xl md:text-4xl lg:text-6xl"
           data-text="Awesome"
           onClick={() => {
             setTimeout(() => {
@@ -80,12 +80,12 @@ const NewHero: React.FC = () => {
             }, 400);
           }}
         >
-          <span className="actual-textxw text-2xl md:text-4xl lg:text-6xl">
+          <span className="actual-textxw text-4xl md:text-4xl lg:text-6xl">
             &nbsp;WOMen&nbsp;
           </span>
           <span
             aria-hidden="true"
-            className="hover-textxw text-2xl md:text-4xl lg:text-6xl"
+            className="hover-textxw text-4xl md:text-4xl lg:text-6xl"
           >
             &nbsp;WOMEN&nbsp;
           </span>

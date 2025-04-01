@@ -137,7 +137,7 @@ export const MobileSearch: React.FC = () => {
                 محصولی پیدا نشد
               </div>
             ) : (
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2">
+              <div className="mt-4 justify-self-center grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2">
                 {results.map((result) => (
                   <MainCard
                     mobileW={1023}

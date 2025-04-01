@@ -39,13 +39,38 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [currentItem, setCurrentItem] = useState<CurrentItem[]>([]);
   const { cart, addItem, decreaseItem, resetItem, resetCart } = useCart();
-
+  const decreaseCurrentItem = (item: Omit<CurrentItem, "quantity">) => {
+    setCurrentItem((prev) => {
+      const existingItem = prev.find(
+        (i) => i.id === item.id && i.sizes === item.sizes,
+      );
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          return prev.map((i) =>
+            i.id === item.id && i.sizes === item.sizes
+              ? { ...i, quantity: i.quantity - 1 }
+              : i,
+          );
+        }
+        // Remove item if quantity would become 0
+        return prev.filter(
+          (i) => !(i.id === item.id && i.sizes === item.sizes),
+        );
+      }
+      return prev;
+    });
+  };
   const sizes = [
     { value: "sm", label: "Small" },
     { value: "md", label: "Medium" },
     { value: "lg", label: "Large" },
     { value: "xl", label: "XLarge" },
   ];
+  const resetCurrentItem = (item: Omit<CurrentItem, "quantity">) => {
+    setCurrentItem((prev) =>
+      prev.filter((itemx) => itemx.sizes !== item.sizes),
+    );
+  };
   return (
     <div>
       <div
@@ -58,7 +83,6 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
         <AnimatePresence>
           <motion.div
             layoutId={`card-${selected.id}`}
-            
             transition={{ duration: 0.3 }}
             className="rounded-box border-1 relative grid h-fit w-fit max-w-[85%] cursor-default grid-cols-2 overflow-hidden border-gray-400 bg-white shadow-md shadow-gray-700"
             onClick={(e) => {
@@ -83,10 +107,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                 className="border-1 h-[100%] max-h-[600px] w-full justify-self-start border-gray-300 object-contain p-2"
               />
             </div>
-            <div
-              
-              className="col-end-3 mt-20 w-full flex-row"
-            >
+            <div className="col-end-3 mt-20 w-full flex-row">
               <h1 className="m-2 mb-20 h-fit border-b-4 p-2 text-center font-sans text-xl">
                 {selected.title.toUpperCase()}
               </h1>
@@ -100,8 +121,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
               <h1 className="ml-4 text-sm text-black/60">
                 <Ruler color="black" size={20} className="mb-0.5 inline" /> Size
               </h1>
-              <div className="h-fit bg-white p-4">
-                <div className="grid grid-cols-2 gap-4 lg:flex lg:justify-evenly">
+              <div className="w-full bg-white p-2">
+                <div className="flex flex-between justify-center gap-2">
                   {sizes.map((size) => (
                     <motion.button
                       key={size.value}
@@ -110,7 +131,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                         selected.sizes = size.label;
                         console.log(selected);
                       }}
-                      className={`h-fit w-fit items-center justify-self-center rounded-lg border-2 border-black p-2 text-sm font-bold uppercase transition-colors duration-300 ${selectedSize === size.value ? "bg-black text-white" : "bg-white text-black"} `}
+                      className={`relative flex h-12 w-20 items-center justify-center rounded-lg border-2 border-gray-800 text-sm font-bold uppercase transition-all duration-300 ${selectedSize === size.value ? "bg-gray-800 text-white shadow-lg" : "bg-white text-gray-800 hover:bg-gray-100"}`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, y: 20 }}
@@ -118,34 +139,31 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                       transition={{ type: "spring", stiffness: 100 }}
                     >
                       {size.label}
-                      <AnimatePresence>
-                        {selectedSize === size.value && (
-                          <motion.div
-                            className="absolute -right-2 -top-2 rounded-full border-2 border-black bg-white p-1"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 300 }}
+                      {selectedSize === size.value && (
+                        <motion.div
+                          className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <motion.svg
+                            className="h-4 w-4 text-white"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            initial={{ pathLength: 0 }}
+                            animate={{ pathLength: 1 }}
+                            transition={{ duration: 0.3 }}
                           >
-                            <motion.svg
-                              className="h-4 w-4 text-black"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              initial={{ pathLength: 0 }}
-                              animate={{ pathLength: 1 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </motion.svg>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </motion.svg>
+                        </motion.div>
+                      )}
                     </motion.button>
                   ))}
                 </div>
@@ -194,30 +212,56 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                 <ShoppingBag size={20} className="mx-2 justify-self-start" />
                 add
               </motion.div>
-              <div className="grid grid-cols-2">
+              <div className="nl-2 max-h-35 mt-2 space-y-3 overflow-auto">
                 {currentItem.length >= 1 &&
-                  currentItem.map((item : any) => (
+                  currentItem.map((item: any) => (
                     <div
-                      key={item.quantity}
-                      className="m-2 inline h-fit w-fit rounded-full bg-black/80 p-2 font-mono uppercase text-white"
+                      key={`${item.id}-${item.quantity}`}
+                      className="flex items-center justify-between rounded-xl bg-white p-4 shadow transition duration-300 hover:shadow-lg dark:bg-gray-50"
                     >
-                      <span className="px-1">{item.quantity}</span>
-                      <span className="px-1">{item.sizes}</span>
-                      <Minus
-                        onClick={() => {
-                          decreaseItem(item);
-                        }}
-                        className="mx-1 inline cursor-pointer"
-                        size={20}
-                      />
-                      <X
-                        className="mx-1 inline cursor-pointer"
-                        size={20}
-                        onClick={() => {
-                          setCurrentItem([]);
-                          resetItem(item);
-                        }}
-                      />
+                      <div className="flex items-center space-x-4">
+                        {/* Thumbnail */}
+                        <div className="h-10 w-10 overflow-hidden rounded-full border border-gray-200">
+                          <img
+                            src={item.imageurl}
+                            alt={item.title}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        {/* Item details */}
+                        <div className="flex flex-col">
+                          <p className="font-bold text-gray-800 dark:text-gray-900">
+                            {item.title}
+                          </p>
+                          <p className="text-sm text-gray-500 dark:text-gray-600">
+                            Size: {item.sizes}
+                          </p>
+                        </div>
+                      </div>
+                      {/* Quantity and action buttons */}
+                      <div className="flex items-center space-x-2">
+                        <span className="font-semibold text-gray-800 dark:text-gray-900">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => {
+                            decreaseItem(item);
+                            decreaseCurrentItem(item);
+                          }}
+                          className="rounded-full bg-gray-200 p-2 transition hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                        >
+                          <Minus size={20} color="white" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            resetItem(item);
+                            resetCurrentItem(item);
+                          }}
+                          className="rounded-full bg-gray-200 p-2 transition hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                        >
+                          <X size={20} color="white" />
+                        </button>
+                      </div>
                     </div>
                   ))}
               </div>

@@ -4,7 +4,7 @@ import React from "react";
 import { useCart } from "@/context/CartContext";
 import { supabase } from "@/Client/SupaBase";
 import { ToastContainer, toast } from "react-toastify";
-import { Minus, X } from "lucide-react";
+import { Minus, Recycle, Trash, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const Cart: React.FC = () => {
@@ -69,7 +69,7 @@ const Cart: React.FC = () => {
           }`}
         >
           {/* Header */}
-          <div className="font-waste mt-10 self-center border-b-2 border-black p-1 px-4 text-3xl">
+          <div className="font-waste mt-4 self-center border-b-2 border-black p-1 px-4 text-3xl">
             SHOPPING BAG
           </div>
           <X
@@ -81,7 +81,7 @@ const Cart: React.FC = () => {
           />
 
           {/* Scrollable Content */}
-          <div className="mt-5 flex-1 overflow-y-auto">
+          <div className=" flex-1 overflow-y-auto">
             {cart.length < 1 ? (
               <div className="font-waste mt-4 text-center text-2xl">
                 YOU HAVE NOTHING IN YOUR BAG
@@ -90,39 +90,46 @@ const Cart: React.FC = () => {
               cart.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-row justify-between border-b-2 border-black p-2 px-5"
+                  className="animate-fadeIn relative my-4 flex transform flex-col items-center justify-between overflow-hidden rounded-xl bg-white p-4 shadow-lg transition-all hover:shadow-2xl md:flex-row"
                 >
-                  <div className="flex flex-row">
+                  <div className="flex w-full flex-row md:w-auto">
                     <img
                       src={item.imageurl}
                       alt={item.title}
-                      className="h-20 w-20 object-cover"
+                      className="h-45 w-35 rounded-md border border-gray-200 object-contain"
                     />
-                    <div className="flex flex-col justify-center pl-2">
-                      <div className="rounded-4xl w-fit border-gray-400 bg-gray-200 p-2 font-sans text-xs">
+                    <div className="ml-4 flex h-fit flex-col">
+                      <div className="mb-1 rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-800">
                         In Cart: {item.quantity}
                       </div>
-                      <div className="font-sans text-sm">${item.price}</div>
-                      <div className="font-sans text-xl">{item.title}</div>
+                      <div className="text-lg font-semibold text-gray-900">
+                        {item.title}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Price: ${item.price}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Size: {item.sizes}
+                      </div>
                     </div>
-                  </div>
-                  <div className="self-center justify-self-end p-1 px-4">
-                    <Minus
-                      onClick={() => decreaseItem(item)}
-                      color="white"
-                      className="rounded-4xl m-1 mx-1 inline cursor-pointer border border-gray-200 bg-gray-700 p-2"
-                      size={40}
-                    />
-                    <X
-                      className="rounded-4xl m-1 mx-1 inline cursor-pointer border border-gray-200 bg-gray-700 p-2"
-                      size={40}
-                      color="white"
-                      onClick={() => resetItem(item)}
-                    />
-                  </div>
-                  <div className="flex flex-row items-center">
-                    <div className="rounded-4xl w-fit border-gray-400 bg-gray-200 p-2 font-sans text-sm">
-                      Total Price: ${item.price * item.quantity}
+                    <div className="absolute mt-4  flex w-full -translate-x-10 items-center justify-end self-end md:mt-0">
+                      <div className="mt-4 md:mt-0 -translate-y-1">
+                        <div className="rounded-full bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800">
+                          Total: ${item.price * item.quantity}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => decreaseItem(item)}
+                        className="mx-1 flex items-center justify-center rounded-full border border-gray-300 bg-gray-700 p-2 text-white transition-colors hover:bg-gray-600"
+                      >
+                        <Minus size={24} />
+                      </button>
+                      <button
+                        onClick={() => resetItem(item)}
+                        className="mx-1 flex items-center justify-center rounded-full border border-gray-300 bg-gray-700 p-2 text-white transition-colors hover:bg-gray-600"
+                      >
+                        <Trash size={24} />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -131,27 +138,34 @@ const Cart: React.FC = () => {
           </div>
 
           {/* Purchase Section */}
-          <div className="border-t-2 border-black p-4">
+          <div className="mb-10 md:mb-0 border-t-2 border-black p-2 px-4">
             {cart.length > 0 && (
-              <div className="flex h-fit w-full justify-between">
-                <p className="font-waste m-2 p-1 text-lg">Total price: </p>
-                <p className="self-center justify-self-end font-sans uppercase text-black">
-                  ${ptotal}
-                </p>
+              <div className="relative flex transform items-center justify-between rounded-lg border border-gray-200 bg-white p-3 shadow-md transition duration-300 hover:scale-105">
+                <div>
+                  <h3 className="text-lg font-medium text-gray-800">
+                    Total Price
+                  </h3>
+                  
+                </div>
+                <div className="rounded-full bg-gray-800 px-4 py-1">
+                  <p className="font-sans text-xl font-bold uppercase text-white">
+                    ${ptotal}
+                  </p>
+                </div>
               </div>
             )}
             <button
-              className={`w-full ${
-                cart.length < 1 && user !== null
-                  ? "cursor-not-allowed opacity-30"
-                  : "cursor-pointer opacity-100"
-              } frounded bg-black py-2 text-white`}
+              className={`mt-4 w-full rounded-lg py-3 font-bold transition-all duration-300 ${
+                cart.length < 1 || !user
+                  ? "cursor-not-allowed bg-gray-700 opacity-50"
+                  : "bg-indigo-600 hover:scale-105 hover:bg-indigo-700"
+              }`}
               disabled={!user}
               onClick={purchase}
             >
               {loading ? (
                 <svg
-                  className="mx-auto h-5 w-5 animate-spin self-center justify-self-center"
+                  className="mx-auto h-6 w-6 animate-spin"
                   viewBox="0 0 24 24"
                 >
                   <circle
@@ -205,6 +219,21 @@ const Cart: React.FC = () => {
           </div>
         )}
       </div>
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

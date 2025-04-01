@@ -151,7 +151,6 @@ const Cataloge: React.FC = () => {
 
   // Smooth scroll when changing pages
 
-
   // Throttled sticky element logic using requestAnimationFrame
   useEffect(() => {
     let ticking = false;
@@ -404,7 +403,7 @@ const Cataloge: React.FC = () => {
               <div className="flex gap-4">
                 <button
                   onClick={() => {
-                    handleNextPage();
+                    handlePrevPage();
                     const scrollPosition = newRef.current?.offsetTop ?? 0 - 100;
                     window.scrollTo({
                       top: scrollPosition,

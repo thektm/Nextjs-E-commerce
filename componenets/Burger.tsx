@@ -66,7 +66,7 @@ const Burger: React.FC = () => {
       >
         {/* Close Button */}
         <button
-          className="absolute right-4 top-4 text-2xl"
+          className="absolute left-4 top-4 text-2xl"
           onClick={() => setIsOpen(false)}
         >
           ✖
