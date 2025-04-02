@@ -376,6 +376,7 @@ const Cataloge: React.FC = () => {
             {paginatedProducts[currentPage]?.map((product: any) => (
               <motion.div
                 key={product.id}
+                style={{ willChange: "transform" }}
                 layoutId={`card-${product.id}`}
                 className="break-inside-avoid self-center justify-self-center py-2"
               >

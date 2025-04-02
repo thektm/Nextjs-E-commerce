@@ -83,6 +83,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
         <AnimatePresence>
           <motion.div
             layoutId={`card-${selected.id}`}
+            style={{ willChange: "transform" }}
             transition={{ duration: 0.3 }}
             className="rounded-box border-1 relative grid h-fit w-fit max-w-[85%] cursor-default grid-cols-2 overflow-hidden border-gray-400 bg-white shadow-md shadow-gray-700"
             onClick={(e) => {
@@ -99,7 +100,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
               <X color="black" width={30} height={30} />
             </div>
             <div className="col-end-2 p-2">
-              <motion.img
+              <img
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
@@ -107,7 +108,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                 className="border-1 h-[100%] max-h-[600px] w-full justify-self-start border-gray-300 object-contain p-2"
               />
             </div>
-            <div className="col-end-3 mt-20 w-full flex-row">
+            <div className="col-end-3 mt-10 w-full flex-row">
               <h1 className="m-2 mb-20 h-fit border-b-4 p-2 text-center font-sans text-xl">
                 {selected.title.toUpperCase()}
               </h1>
@@ -122,7 +123,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                 <Ruler color="black" size={20} className="mb-0.5 inline" /> Size
               </h1>
               <div className="w-full bg-white p-2">
-                <div className="flex flex-between justify-center gap-2">
+                <div className="flex-between flex justify-center gap-2">
                   {sizes.map((size) => (
                     <motion.button
                       key={size.value}
@@ -134,8 +135,6 @@ const DetailModal: React.FC<DetailModalProps> = ({ selected, disable }) => {
                       className={`relative flex h-12 w-20 items-center justify-center rounded-lg border-2 border-gray-800 text-sm font-bold uppercase transition-all duration-300 ${selectedSize === size.value ? "bg-gray-800 text-white shadow-lg" : "bg-white text-gray-800 hover:bg-gray-100"}`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
                       transition={{ type: "spring", stiffness: 100 }}
                     >
                       {size.label}

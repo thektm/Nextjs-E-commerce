@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const Burger: React.FC = () => {
   const [width, setWidth] = useState(0);
@@ -37,32 +38,38 @@ const Burger: React.FC = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"
-         className="w-7 h-8"
+          className="h-8 w-7"
         >
           <path
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M5 8h22M5 16h22M5 24h22"
           />
         </svg>
       </button>
 
       {/* Overlay */}
-      <div
-        className={`fixed inset-0 z-40 h-screen w-screen bg-white transition-opacity duration-300 ${
-          isOpen ? "opacity-50" : "pointer-events-none opacity-0"
-        }`}
+      <motion.div
+        style={{ willChange: "opacity" }}
         onClick={() => setIsOpen(false)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isOpen ? 0.5 : 0 }}
+        transition={{ duration: 0.3 }}
+        className={`fixed inset-0 z-40 h-screen w-screen bg-white ${
+          isOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       />
 
       {/* Navigation Menu */}
-      <div
-        className={`fixed -right-5 top-0 z-50 h-screen w-78 transform bg-white p-4 shadow-lg transition-transform duration-300 ${
-          isOpen ? "-translate-x-[5%]" : "translate-x-full"
-        }`}
+      <motion.div
+        style={{ willChange: "transform" }}
+        initial={{ x: "100%" }}
+        animate={{ x: isOpen ? "-5%" : "100%" }}
+        transition={{ duration: 0.3 }}
+        className="w-78 fixed -right-5 top-0 z-50 h-screen transform bg-white p-4 shadow-lg"
       >
         {/* Close Button */}
         <button
@@ -109,7 +116,7 @@ const Burger: React.FC = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </motion.div>
     </div>
   );
 };
